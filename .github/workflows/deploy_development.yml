@@ -6,7 +6,6 @@ on:
     branches:
       - master
     paths:
-      - .github/**
       - files/**
       - Dockerfile
 
@@ -43,7 +42,7 @@ jobs:
           username: ${{secrets.REGISTRY_USERNAME}}
           password: ${{secrets.REGISTRY_PASSWORD}}
 
-      - name: Build + Push image ("development")
+      - name: Build + Push image ("latest")
         run: |
           docker buildx build \
             --cache-from type=local,src=/tmp/buildx-cache \

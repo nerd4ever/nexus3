@@ -2,12 +2,12 @@ name: Deploy Development Build
 
 # Trigger on push to "development" branch
 on:
-  push:
+   push:
     branches:
-      - master
-    paths:
-      - files/**
-      - Dockerfile
+      - "*"
+#    paths:
+#      - files/**
+#      - Dockerfile
 
 jobs:
   build_deploy_to_registry:

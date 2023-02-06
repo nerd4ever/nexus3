@@ -1,9 +1,10 @@
 # Download, extract Nexus to /tmp/sonatype/nexus
-FROM eclipse-temurin:8-jre-jammy as downloader
+FROM eclipse-temurin:11-jre-jammy as downloader
 
 ARG NEXUS_VERSION=3.43.0-01
+ARG NEXUS_COMPOSER_VERSION=0.0.8
 ARG NEXUS_DOWNLOAD_URL=https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz
-
+ARG NEXUS_COMPOSER_URL=https://repo1.maven.org/maven2/org/sonatype/nexus/plugins/nexus-repository-composer/${NEXUS_COMPOSER_VERSION}/nexus-repository-composer-${NEXUS_COMPOSER_VERSION}-bundle.kar
 # Download Nexus and other stuff we need later
 # Use wget to improve performance (#11)
 # Install wget
@@ -15,13 +16,13 @@ RUN wget --quiet --output-document=/tmp/nexus.tar.gz "${NEXUS_DOWNLOAD_URL}" && 
     mv /tmp/sonatype/nexus-${NEXUS_VERSION} /tmp/sonatype/nexus && \
     rm /tmp/nexus.tar.gz
 
-
-
+# Download + extract Nexus Repository Composer to "/tmp/sonatype/nexus" for use later
+RUN wget --quiet --output-document=/tmp/sonatype/nexus/deploy/nexus-repository-composer-bundle.kar "${NEXUS_COMPOSER_URL}"
 
 # Runtime image
 # Logic adapted from official Dockerfile
 # https://github.com/sonatype/docker-nexus3/blob/master/Dockerfile
-FROM eclipse-temurin:8-jre-jammy
+FROM eclipse-temurin:11-jre-jammy
 
 # Image metadata
 # git commit

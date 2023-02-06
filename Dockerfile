@@ -1,5 +1,5 @@
 # Download, extract Nexus to /tmp/sonatype/nexus
-FROM eclipse-temurin:11-jre-jammy as downloader
+FROM eclipse-temurin:8-jre-jammy as downloader
 
 ARG NEXUS_VERSION=3.43.0-01
 ARG NEXUS_COMPOSER_VERSION=0.0.8
@@ -22,7 +22,7 @@ RUN wget --quiet --output-document=/tmp/sonatype/nexus/deploy/nexus-repository-c
 # Runtime image
 # Logic adapted from official Dockerfile
 # https://github.com/sonatype/docker-nexus3/blob/master/Dockerfile
-FROM eclipse-temurin:11-jre-jammy
+FROM eclipse-temurin:8-jre-jammy
 
 # Image metadata
 # git commit
